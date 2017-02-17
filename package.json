@@ -1,0 +1,17 @@
+{
+  "name": "node-express-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Rachelle Rathbone <rachellerathbone@gmail.com>",
+  "license": "ISC"
+}
