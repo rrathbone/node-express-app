@@ -3,6 +3,14 @@ const express = require('express');
 const app = express();
 
 const port = process.env.PORT || 5000;
+const nav = [{
+  Link: '/Books',
+  Text: 'Book'
+  }, {
+  Link: '/Authors',
+  Text: 'Author'
+}];
+const bookRouter = require('./routes/bookRoutes')(nav);
 
 app.use(express.static('public'));
 app.set('views', 'src/views');
@@ -12,10 +20,18 @@ app.set('views', 'src/views');
 
 app.set('view engine', 'ejs');
 
+app.use('/Books', bookRouter);
+
 app.get('/', (req, res) => {
   res.render('index', {
     title: 'Hello from render',
-    list: ['a', 'b']
+    nav: [{
+      Link: '/Books',
+      Text: 'Books'
+    }, {
+      Link: '/Authors',
+      Text: 'Authors'
+    }]
   });
 });
 
