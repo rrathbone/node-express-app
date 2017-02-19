@@ -51,6 +51,39 @@ const books = [{
               read: false
           }];
 
+const authors = [{
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          },
+          {
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          },
+          {
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          },
+          {
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          },
+          {
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          },
+          {
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          },
+          {
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          },
+          {
+            name: 'War and Peace',
+            description: 'Lev Nikolayevich Tolstoy'
+          }];
+
 const router = function(nav) {
   adminRouter.route('/addBooks')
     .get((req, res) => {
@@ -64,6 +97,19 @@ const router = function(nav) {
         });
       });
     });
+
+    adminRouter.route('/addAuthors')
+      .get((req, res) => {
+        const url = 'mongodb://localhost:27017/libraryApp';
+
+        mongodb.connect(url, (err, db) => {
+          let collection = db.collection('authors');
+          collection.insertMany(authors, (err, results) => {
+            res.send(results);
+            db.close();
+          });
+        });
+      });
 
   return adminRouter;
 }

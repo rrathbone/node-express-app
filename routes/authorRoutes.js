@@ -1,59 +1,42 @@
 const express = require('express');
-
 const authorRouter = express.Router();
+const mongodb = require('mongodb').MongoClient;
+const objectId = require('mongodb').ObjectID;
 
 const router = function(nav) {
-const authors = [{
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          },
-          {
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          },
-          {
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          },
-          {
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          },
-          {
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          },
-          {
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          },
-          {
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          },
-          {
-            name: 'War and Peace',
-            description: 'Lev Nikolayevich Tolstoy'
-          }];
-
   authorRouter.route('/')
     .get((req, res) => {
-      res.render('authorListView', {
-        title: 'Authors',
-        nav: nav,
-        authors: authors
+      const url = 'mongodb://localhost:27017/libraryApp';
+
+      mongodb.connect(url, (err, db) => {
+        const collection = db.collection('authors');
+
+        collection.find({}).toArray((err, results) => {
+          res.render('authorListView', {
+            title: 'Authors',
+            nav: nav,
+            authors: results
+          })
+        });
       });
     });
 
   authorRouter.route('/:id')
     .get((req, res) => {
-      const id = req.params.id;
-      res.render('authorView', {
-        title: 'Author',
-        nav: nav,
-        author: authors[id]
+      const id = new objectId(req.params.id);
+      const url = 'mongodb://localhost:27017/libraryApp';
+
+      mongodb.connect(url, (err, db) => {
+        const collection = db.collection('authors');
+
+        collection.findOne({_id: id}, ((err, results) => {
+          res.render('authorView', {
+            title: 'Author',
+            nav: nav,
+            author: results
+          })
+        }));
       });
-      res.send('Hello Single Author');
     });
 
   return authorRouter;
