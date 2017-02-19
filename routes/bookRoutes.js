@@ -3,7 +3,7 @@ const express = require('express');
 const bookRouter = express.Router();
 
 const router = function(nav) {
-  const books = [{
+const books = [{
               title: 'War and Peace',
               genre: 'Historical Fiction',
               author: 'Lev Nikolayevich Tolstoy',
@@ -72,7 +72,7 @@ const router = function(nav) {
       res.send('Hello Single Book');
     });
 
-    return bookRouter;
+  return bookRouter;
 }
 
 module.exports = router;
