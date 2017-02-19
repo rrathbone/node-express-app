@@ -1,5 +1,4 @@
 const express = require('express');
-
 const app = express();
 
 const port = process.env.PORT || 5000;
@@ -13,17 +12,16 @@ const nav = [{
 }];
 const bookRouter = require('./routes/bookRoutes')(nav);
 const authorRouter = require('./routes/authorRoutes')(nav);
+const adminRouter = require('./routes/adminRoutes')(nav);
 
 app.use(express.static('public'));
 app.set('views', 'src/views');
-
-// var handlebars = require('express-handlebars')
-// app.engine('hbs', handlebars({extname: '.hbs'}));
 
 app.set('view engine', 'ejs');
 
 app.use('/Books', bookRouter);
 app.use('/Authors', authorRouter);
+app.use('/Admin', adminRouter);
 
 app.get('/', (req, res) => {
   res.render('index', {
