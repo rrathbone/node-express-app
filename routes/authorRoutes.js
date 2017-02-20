@@ -4,6 +4,14 @@ const mongodb = require('mongodb').MongoClient;
 const objectId = require('mongodb').ObjectID;
 
 const router = function(nav) {
+  authorRouter.use((req, res, next) => {
+    if(!req.user) {
+      res.redirect('/');
+    }
+
+    next();
+  });
+
   authorRouter.route('/')
     .get((req, res) => {
       const url = 'mongodb://localhost:27017/libraryApp';
